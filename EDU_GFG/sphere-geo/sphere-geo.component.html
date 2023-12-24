@@ -1,0 +1,206 @@
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>SphereGeometry</b></h1>
+        <p class="text-white">
+            `SphereGeometry` is a class used to create a 3D spherical geometry in Three.js. It is a part of the
+            library's core module, and it is commonly used for creating spheres in 3D scenes.
+        </p>
+
+
+        <div class="container">
+            <h3><b class="text-white">SphereGeometry</b>(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart,
+                thetaLength);</h3>
+
+            <details>
+                <summary>radius (float)</summary>
+                <p>The radius of the sphere. This determines the size of the sphere.</p>
+                <ul>
+                    <li><strong>radius:</strong> This parameter determines the radius of the sphere, essentially how
+                        large or small the sphere will be. The default value is 1 unit.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>widthSegments (integer)</summary>
+                <p>The number of horizontal segments. More segments result in a smoother sphere.</p>
+                <ul>
+                    <li><strong>widthSegments:</strong> This sets the number of horizontal segments that make up the
+                        sphere's surface. A higher value results in a smoother surface. The minimum allowed value is 3,
+                        and the default is 32.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>heightSegments (integer)</summary>
+                <p>The number of vertical segments. Similar to widthSegments, it affects the sphere's smoothness.</p>
+                <ul>
+                    <li><strong>heightSegments:</strong> Similar to widthSegments, this parameter controls the number of
+                        vertical segments forming the sphere. A higher value leads to a more detailed representation.
+                        The minimum allowed value is 2, and the default is 16.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>phiStart (float, optional)</summary>
+                <p>The starting angle for the horizontal (phi) direction, in radians.</p>
+                <ul>
+                    <li><strong>phiStart:</strong> Specifies the horizontal starting angle for creating the sphere. It
+                        determines where the horizontal sweep begins around the Y axis. The default is 0, meaning the
+                        sweep starts from the positive X-axis.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>phiLength (float, optional)</summary>
+                <p>The central angle for the horizontal (phi) direction, in radians. It determines the portion of the
+                    sphere to be generated.</p>
+                <ul>
+                    <li><strong>phiLength:</strong> This parameter defines the horizontal sweep angle size. The default
+                        value is Math.PI * 2, which means a complete circle (360 degrees). Adjusting this can create
+                        incomplete spheres or slices by specifying a fraction of the circle.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>thetaStart (float, optional)</summary>
+                <p>The starting angle for the vertical (theta) direction, in radians.</p>
+                <ul>
+                    <li><strong>thetaStart:</strong> Sets the vertical starting angle for creating the sphere. It
+                        determines where the vertical sweep begins around the Z axis. The default is 0, starting from
+                        the positive Y-axis.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>thetaLength (float, optional)</summary>
+                <p>The central angle for the vertical (theta) direction, in radians. It determines the portion of the
+                    sphere to be generated.</p>
+                <ul>
+                    <li><strong>thetaLength:</strong> Specifies the vertical sweep angle size. The default is Math.PI,
+                        representing a half-circle (180 degrees). Adjusting this parameter allows for creating spheres
+                        with varying heights or slices along the vertical axis.</li>
+                </ul>
+            </details>
+
+            <br>
+            <p>The geometry is created by sweeping and calculating vertices around the Y axis (horizontal sweep) and the
+                Z axis (vertical sweep). Thus, incomplete spheres (akin to 'sphere slices') can be created through the
+                use of different values of phiStart, phiLength, thetaStart, and thetaLength, in order to define the
+                points in which we start (or end) calculating those vertices.</p>
+
+        </div>
+
+
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js SphereGeometry Example</h1>
+                <pre>
+    <code>
+        import './style.css'
+        import * as THREE from 'three'
+        import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js'
+        import * as dat from 'lil-gui'
+
+         // Set up scene
+         const scene = new THREE.Scene();
+         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+         const renderer = new THREE.WebGLRenderer();
+         renderer.setSize(window.innerWidth, window.innerHeight);
+         document.body.appendChild(renderer.domElement);
+        
+         // Sphere parameters
+         const radius = 5;
+         const widthSegments = 32;
+         const heightSegments = 16;
+        
+         const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
+         const sphereMaterial = new THREE.MeshBasicMaterial({{'{'}} color: 0x00ff00, wireframe: true {{'}'}});
+         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        
+         scene.add(sphere);
+        
+         // Animation
+         const animate = () => {{'{'}}
+           requestAnimationFrame(animate);
+        
+           // Rotate sphere
+           sphere.rotation.x += 0.01;
+           sphere.rotation.y += 0.01;
+        
+           renderer.render(scene, camera);
+           {{'}'}};
+        
+         // Camera position
+         camera.position.z = 15;
+        
+         // GUI setup
+         const gui = new dat.GUI();
+         const guiParams = {{'{'}}
+           radius: radius,
+           widthSegments: widthSegments,
+           heightSegments: heightSegments,
+           {{'}'}};
+        
+         gui.add(guiParams, 'radius', 1, 10).onChange((value) => {{'{'}}
+           sphere.geometry = new THREE.SphereGeometry(value, guiParams.widthSegments, guiParams.heightSegments);
+           {{'}'}});
+        
+         gui.add(guiParams, 'widthSegments', 3, 64).onChange((value) => {{'{'}}
+           sphere.geometry = new THREE.SphereGeometry(guiParams.radius, value, guiParams.heightSegments);
+           {{'}'}});
+        
+         gui.add(guiParams, 'heightSegments', 2, 32).onChange((value) => {{'{'}}
+           sphere.geometry = new THREE.SphereGeometry(guiParams.radius, guiParams.widthSegments, value);
+           {{'}'}});
+        
+         // Handle window resize
+         window.addEventListener('resize', () => {{'{'}}
+           camera.aspect = window.innerWidth / window.innerHeight;
+           camera.updateProjectionMatrix();
+           renderer.setSize(window.innerWidth, window.innerHeight);
+           {{'}'}});
+        
+         // Start animation
+         animate();
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+<!-- code explanation -->
+<div class="container">
+    <div class="container">
+        <h1 class="my-4 text-center">Explanation</h1>
+
+        <h2>Importing Libraries and Setting Up the Scene</h2>
+        <p>The first part of the code imports the necessary libraries: Three.js, OrbitControls, and lil-gui. These libraries are used to create the 3D scene, handle camera controls, and provide a graphical user interface (GUI) for adjusting the sphere's parameters.</p>
+
+        <h2>Creating the Sphere and Adding It to the Scene</h2>
+        <p>The code then defines the parameters of the sphere to be created: radius, width segments, and height segments. These parameters determine the size and detail level of the sphere.</p>
+
+        <h2>Animation Loop and Sphere Rotation</h2>
+        <p>The animate function is responsible for the animation loop. This function is called repeatedly using requestAnimationFrame, which ensures smooth animation at a consistent frame rate.</p>
+
+        <h2>Camera Positioning and GUI Setup</h2>
+        <p>The camera position is set by setting its position.z property to 15. This places the camera at a fixed distance from the center of the sphere, providing a good viewing angle.</p>
+
+        <h2>Handling Window Resize</h2>
+        <p>The code adds an event listener for the resize event of the window. This ensures that the camera's aspect ratio is adjusted correctly when the window size changes, preventing distortions in the animation.</p>
+
+        <h2>Starting the Animation</h2>
+        <p>Finally, the animate function is called at the end of the code, initiating the animation loop. This continuously updates the sphere's rotation and renders the updated scene, resulting in a smooth 3D animation of a rotating sphere.</p>
+    </div>
+</div>
+
+</div>
+<div #rendererContainer></div>

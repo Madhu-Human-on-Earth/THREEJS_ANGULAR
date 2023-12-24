@@ -1,0 +1,44 @@
+p{
+    margin: 0;
+    font-weight: 400;
+    font-size: 1rem;
+    font:bold;
+    color:greenyellow;
+    letter-spacing: 0.07rem;
+    line-height: 1.5rem;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;}
+    .video-first-sec {
+        max-width: 100%;
+        height: auto;
+        width: 100%;
+        border-radius: 2rem;
+      }
+    
+      .shape-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        position: relative;
+      }
+      .custom-shape-divider-bottom-1699272722 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+    
+    .custom-shape-divider-bottom-1699272722 svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 0px;
+        transform: rotateY(180deg);
+    }
+    
+    .custom-shape-divider-bottom-1699272722 .shape-fill {
+        fill: #FFFFFF;
+    }

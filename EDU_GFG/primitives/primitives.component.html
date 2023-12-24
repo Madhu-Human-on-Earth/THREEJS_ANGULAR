@@ -1,0 +1,157 @@
+<div class="container bg-dark text-white p-3 mt-2">
+  <div class="ms-2">
+    <h1 class="text-center  text-bg-light"><b>Primitives</b></h1>
+  <p class="text-white">
+      In the world of three.js (a JavaScript library for creating 3D graphics), "primitives" are like ready-made 3D shapes that you can easily use in your projects. Imagine them as basic building blocks for creating things in a 3D space, like cubes, spheres, or cylinders. These primitives have adjustable settings (like size or shape) that you can tweak to fit your needs. They're handy for getting started with 3D graphics before diving into more complex designs.
+  </p>
+
+  <h3> Here are some of the common types of primitives in Three.js:</h3>
+  <ul class="ms-4">
+      <li>BoxGeometry</li>
+      <li>SphereGeometry</li>
+      <li>CylinderGeometry</li>
+      <li>ConeGeometry</li>
+      <li>TorusGeometry</li>
+      <li>TorusKnotGeometry</li>
+      <li>PlaneGeometry</li>
+      <li>TextGeometry</li>
+      <li>LatheGeometry</li>
+      <li>OctahedronGeometry</li>
+      <li>IcosahedronGeometry</li>
+      <li>TetrahedronGeometry</li>
+      <li>RingGeometry</li>
+      <li>CircleGeometry</li>
+      <li>DodecahedronGeometry</li>
+      <li>EdgesGeometry</li>
+      <li>ExtrudeGeometry</li>
+      <li>ShapeGeometry</li>
+      <li>ParametricGeometry</li>
+      <li>TubeGeometry</li>
+      <li>WireframeGeometry</li>
+  </ul>
+  <div class="container">
+      <h3>What is a Geometry in three.js?</h3>
+<p>        In the context of three.js, "Geometry" refers to the representation of 3D objects or shapes in a virtual three-dimensional space. It is a fundamental concept within the library. A `Geometry` object in three.js defines the structure and layout of vertices (points in 3D space), as well as other properties like faces, normals, and UV coordinates.
+</p>
+
+  <details>
+    <summary>Vertices</summary>
+  <p>A geometry contains a set of vertices, which are the points in 3D space that define the shape of the object.</p>
+
+
+  </details>
+
+<details>
+  <summary> Faces</summary>
+  <p> Faces connect these vertices to form polygons. For example, a cube might have six faces, each connecting four vertices.
+  </p></details>
+<details>
+  <summary>Normals</summary>
+<p>Normals are vectors perpendicular to the faces. They are crucial for lighting calculations, helping to determine how light interacts with the surface of the object.
+</p>
+</details>
+<details>
+  <summary>UV Coordinates</summary>
+<p>UV coordinates define how textures are mapped onto the geometry. They specify how the pixels of a texture image correspond to the vertices of the 3D object.
+</p>
+</details>
+<br>
+<p>A `Geometry` object in three.js provides a way to define the basic structure of a 3D object by specifying its vertices, faces, and other properties. It serves as a blueprint for creating and rendering 3D shapes within the three.js framework. However, note that in the more recent versions of three.js, `BufferGeometry` is often preferred over `Geometry` for performance reasons, as it utilizes buffers for more efficient data handling.
+</p>  
+
+</div>
+
+<div>
+  <!-- about the box geometry -->
+  <h3>BoxGeometry</h3>
+  <p>The BoxGeometry class is used to create a box-shaped mesh. It is one of the most commonly used primitives in three.js. It is defined by its width, height, and depth, as well as the number of segments to divide each dimension into. The default values are 1 for each dimension and 1 for the number of segments. The BoxGeometry class inherits from the Geometry class, which is used to define the structure of 3D objects in three.js.</p>
+  <p><span class="bg1"><b>BoxGeometry</b></span>(width : Float, height : Float, depth : Float, widthSegments : Integer, heightSegments : Integer, depthSegments : Integer)</p>
+  <p><span class="bg">width</span> — Width of the sides on the X axis.</p>
+  <p><span class="bg">height</span> — Height of the sides on the Y axis.</p>
+  <p><span class="bg">depth</span> — Depth of the sides on the Z axis.</p>
+  <p><span class="bg">widthSegments</span> — Optional. Number of segmented faces along the width of the sides. Default is 1.</p>
+  <p><span class="bg">heightSegments</span> — Optional. Number of segmented faces along the height of the sides. Default is 1.</p>
+  <p><span class="bg">depthSegments</span> — Optional. Number of segmented faces along the depth of the sides. Default is 1.</p>
+<!-- full code for box geometry in three.js   -->
+<div class="code-container">
+<h1>Three.js BoxGeometry Example</h1>
+<pre>
+  <code>
+    import './style.css';
+    import * as THREE from 'three';
+    import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js';
+
+    // Create a scene and a camera
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    // Create a renderer and add it to the DOM
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create a BoxGeometry (this makes a cube)
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+
+    // Create a material to apply to the cube (let's make it green)
+    var material = new THREE.MeshBasicMaterial({{'{'}} color: 0x00ff00 {{'}'}});
+
+    // Apply the material to the BoxGeometry
+    var cube = new THREE.Mesh(geometry, material);
+
+    // Add the cube to the scene
+    scene.add(cube);
+
+    // Set the camera's distance away from the cube
+    camera.position.z = 5;
+
+    // Add OrbitControls for camera movement
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.maxPolarAngle = Math.PI / 2;
+
+    // Animation function
+    function animate() {{'{'}}
+      requestAnimationFrame(animate);
+
+      // Rotate the cube
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+
+      // Update controls
+      controls.update();
+
+      // Render the scene
+      renderer.render(scene, camera);
+      {{'}'}}
+
+    // Handle window resize
+    window.addEventlistener('resize', () => {{'{'}}
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(newWidth, newHeight);
+      {{'}'}});
+
+    // Start the animation loop
+    animate();
+  </code>
+</pre>
+<br>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div #rendererContainer style="width: 100%; height: 100%;"></div>
+
+  

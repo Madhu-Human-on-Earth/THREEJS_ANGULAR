@@ -1,0 +1,265 @@
+
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>ConeGeometry</b></h1>
+        <p class="text-white">
+            ConeGeometry is a class that represents a cone-shaped 3D geometry. It's part of the library's core module, and you can use it to create cone objects in your 3D scenes. Let's break down the key aspects of ConeGeometry and how you can use it.
+        </p>
+
+
+        <div class="container">
+            <h3><b class="text-white">ConeGeometry</b>(radius : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)</h3>
+
+            <details>
+                <summary>radius (Float)</summary>
+                <p>The radius of the cone at its base. This determines the size of the bottom circular face of the cone.</p>
+                <ul>
+                    <li><strong>radius :</strong> Radius of the cone base. Default is 1.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>height (Float)</summary>
+                <p>The height of the cone. This is the distance from the center of the base to the tip.</p>
+                <ul>
+                    <li><strong>height :</strong> Height of the cone. Default is 1.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>radialSegments (Integer)</summary>
+                <p>The number of segmented faces around the circumference of the cone. More segments result in a smoother appearance. This parameter controls how finely the circular base is divided.</p>
+                <ul>
+                    <li><strong>radialSegments :</strong>Number of segmented faces around the circumference of the cone. Default is 32.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>heightSegments (Integer)</summary>
+                <p> The number of segmented faces along the height of the cone. This parameter controls the resolution around the height of the cone. More segments will result in a smoother appearance along the height.</p>
+                <ul>
+                    <li><strong>heightSegments :</strong>Number of rows of faces along the height of the cone. Default is 1.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>openEnded (Boolean)</summary>
+                <p> A boolean that determines whether the ends of the cone are open or closed. If set to true, the cone will have open ends, and if set to false, the ends will be closed. Open-ended cones look like a party hat with no bottom.</p>
+                <ul>
+                    <li><strong>openEnded :</strong>A Boolean indicating whether the base of the cone is open or capped. Default is false, meaning capped.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>thetaStart (Float)</summary>
+                <p>The starting angle in radians of the circular sector used to create the cone. It determines from which angle the geometry is created around the cone's circumference. The default is 0.</p>
+                <ul>
+                    <li><strong>openEnded:</strong> Start angle for first segment, default = 0 (three o'clock position).</li>
+                </ul>
+            </details>
+
+          
+            <details>
+                <summary>thetaLength (Float)</summary>
+                <p>The central angle in radians of the circular sector. This defines how much of the circle is used to create the cone. The default is Math.PI * 2, which creates a complete circle.</p>
+                <ul>
+                    <li><strong>thetaLength :</strong>The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete cone.</li>
+                </ul>
+            </details>
+
+            <br>
+            <p>Understanding these parameters gives you more control over the appearance of the cone geometry in your Three.js scene, allowing you to create a wide variety of cone shapes based on your specific requirements.</p>
+
+        </div>
+
+
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js SphereGeometry Example</h1>
+                <pre>
+    <code>
+        
+        import * as THREE from 'three';
+        import './style.css'
+        import * as dat from 'dat.gui';
+        
+        // Create a scene
+        const scene = new THREE.Scene();
+        
+        // Create a perspective camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        
+        // Create a WebGL renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        // Create ConeGeometry
+        const coneGeometry = new THREE.ConeGeometry(2, 5, 32, 1, false, 0, Math.PI * 2); // Example parameters
+        
+        // Create a material
+        const material = new THREE.MeshBasicMaterial({{'{'}} color: 0x00ff00, wireframe: true {{'}'}});
+        
+        // Create a mesh by combining the geometry and material
+        const coneMesh = new THREE.Mesh(coneGeometry, material);
+        
+        // Add the cone mesh to the scene
+        scene.add(coneMesh);
+        
+        // GUI Controls
+        const gui = new dat.GUI();
+        const coneFolder = gui.addFolder('Cone Settings');
+        
+        const coneParams = {{'{'}}
+            radius: coneGeometry.parameters.radius,
+            height: coneGeometry.parameters.height,
+            radialSegments: coneGeometry.parameters.radialSegments,
+            heightSegments: coneGeometry.parameters.heightSegments,
+            openEnded: coneGeometry.parameters.openEnded,
+            thetaStart: coneGeometry.parameters.thetaStart,
+            thetaLength: coneGeometry.parameters.thetaLength,
+            {{'}'}};
+        
+        function updateConeGeometry() {{'{'}}
+            scene.remove(coneMesh);
+            coneGeometry.dispose();
+        
+            coneGeometry.parameters = {{'{'}}
+                radius: coneParams.radius,
+                height: coneParams.height,
+                radialSegments: coneParams.radialSegments,
+                heightSegments: coneParams.heightSegments,
+                openEnded: coneParams.openEnded,
+                thetaStart: coneParams.thetaStart,
+                thetaLength: coneParams.thetaLength,
+                {{'}'}};
+        
+            const newConeGeometry = new THREE.ConeGeometry(
+                coneParams.radius,
+                coneParams.height,
+                coneParams.radialSegments,
+                coneParams.heightSegments,
+                coneParams.openEnded,
+                coneParams.thetaStart,
+                coneParams.thetaLength
+            );
+        
+            coneMesh.geometry = newConeGeometry;
+            scene.add(coneMesh);
+            {{'}'}}
+        
+        coneFolder.add(coneParams, 'radius', 0, 10).onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'height', 0, 10).onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'radialSegments', 3, 64, 1).onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'heightSegments', 1, 10, 1).onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'openEnded').onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'thetaStart', 0, Math.PI * 2).onChange(updateConeGeometry);
+        coneFolder.add(coneParams, 'thetaLength', 0, Math.PI * 2).onChange(updateConeGeometry);
+        
+        // Animation function
+        const animate = () =>  {{'{'}}
+            requestAnimationFrame(animate);
+        
+            // Update the cone geometry based on the GUI controls
+            updateConeGeometry();
+        
+            // Rotate the cone
+            coneMesh.rotation.x += 0.01;
+            coneMesh.rotation.y += 0.01;
+        
+            // Render the scene
+            renderer.render(scene, camera);
+            {{'}'}};
+        
+        // Handle window resize
+        window.addEventListener('resize', () =>  {{'{'}}
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+        
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+        
+            renderer.setSize(newWidth, newHeight);
+            {{'}'}});
+        
+        // Start the animation
+        animate();
+        
+
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- code explanation -->
+    
+    <div class="container">
+        <div class="container">
+            <h1 class="my-4 text-center">Explanation</h1>
+    
+            <h2>Importing Necessary Libraries:</h2>
+            <ul>
+                <li><code>import * as THREE from 'three';</code>: Imports the Three.js library, which is used for 3D graphics.</li>
+                <li><code>import './style.css';</code>: Imports a CSS file for styling. The content of this file is not provided in the code snippet.</li>
+                <li><code>import * as dat from 'dat.gui';</code>: Imports the dat.GUI library for creating a graphical user interface to control parameters.</li>
+            </ul>
+    
+            <h2>Setting Up the Scene:</h2>
+            <ul>
+                <li><code>const scene = new THREE.Scene();</code>: Creates a Three.js scene to hold 3D objects.</li>
+                <li><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);</code>: Creates a perspective camera with specified parameters.</li>
+                <li><code>const renderer = new THREE.WebGLRenderer();</code>: Creates a WebGL renderer for rendering the 3D scene.</li>
+                <li><code>renderer.setSize(window.innerWidth, window.innerHeight);</code>: Sets the renderer size to match the window size.</li>
+                <li><code>document.body.appendChild(renderer.domElement);</code>: Appends the renderer's canvas element to the document body.</li>
+            </ul>
+    
+            <h2>Creating Cone Geometry:</h2>
+            <ul>
+                <li><code>const coneGeometry = new THREE.ConeGeometry(2, 5, 32, 1, false, 0, Math.PI * 2);</code>: Creates a cone geometry with specified parameters.</li>
+                <li><code>const material = new THREE.MeshBasicMaterial({{'{'}} color: 0x00ff00, wireframe: true {{'}'}});</code>: Creates a basic material for the cone with green color and wireframe rendering.</li>
+                <li><code>const coneMesh = new THREE.Mesh(coneGeometry, material);</code>: Combines the cone geometry and material to create a mesh.</li>
+                <li><code>scene.add(coneMesh);</code>: Adds the cone mesh to the scene.</li>
+            </ul>
+    
+            <h2>GUI Controls:</h2>
+            <ul>
+                <li><code>const gui = new dat.GUI();</code>: Creates a dat.GUI instance for adding graphical controls.</li>
+                <li><code>const coneFolder = gui.addFolder('Cone Settings');</code>: Adds a folder to organize cone-related controls.</li>
+                <li>Controls for cone parameters (radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength) are added with min, max, and step values. These controls trigger the <code>updateConeGeometry</code> function when changed.</li>
+            </ul>
+    
+            <h2>Animation Loop:</h2>
+            <ul>
+                <li><code>const animate = () =>  {{'{'}} ... {{'}'}}</code>: Defines an animation loop using the requestAnimationFrame function.</li>
+                <li><code>updateConeGeometry();</code>: Updates cone geometry based on GUI controls in each animation frame.</li>
+                <li>Rotates the cone in the animation loop.</li>
+                <li><code>renderer.render(scene, camera);</code>: Renders the scene with the camera.</li>
+            </ul>
+    
+            <h2>Handling Window Resize:</h2>
+            <ul>
+                <li>Event listener for window resize updates the camera aspect ratio and renderer size.</li>
+            </ul>
+    
+            <h2>Starting the Animation:</h2>
+            <ul>
+                <li><code>animate();</code>: Initiates the animation loop.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+   <br>
+
+   <div #rendererContainer></div>

@@ -1,0 +1,251 @@
+ 
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>DirectionalLight</b></h1>
+        <p class="text-white">
+
+           A directional light is a type of light source that emits light in a specific direction from an infinitely far away source. It simulates light that is coming from a distant source, such as the sun. Unlike point lights or spotlights, directional lights have no position and emit parallel light rays.
+ 
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js DirectionalLight Example</h1>
+                <pre>
+    <code>
+
+        // Import necessary Three.js modules
+        import * as THREE from 'three';
+        import './style.css';  <!-- Make sure to replace 'style.css' with your actual stylesheet path -->
+        import * as dat from 'dat.gui';
+        import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js';
+
+        // Three.js components
+        let scene, camera, renderer, cube, sphere, torusKnot, ambientLight, directionalLight, controls, gui;
+
+        // Initialize Three.js
+        function initThree() {{'{'}}
+          scene = new THREE.Scene();
+          camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+          camera.position.z = 5;
+          renderer = new THREE.WebGLRenderer({{'{'}} antialias: true {{'}'}});
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          document.body.appendChild(renderer.domElement);
+
+          window.addEventListener('resize', onWindowResize);
+          {{'}'}}
+
+        // Create scene elements
+        function createScene() {{'{'}}
+          ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+          scene.add(ambientLight);
+          {{'}'}}
+
+        // Create lights
+        function createLights() {{'{'}}
+          directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+          directionalLight.position.set(1, 1, 1).normalize();
+          scene.add(directionalLight);
+          {{'}'}}
+
+        // Create 3D objects
+        function createObjects() {{'{'}}
+          const cubeGeometry = new THREE.BoxGeometry();
+          const cubeMaterial = new THREE.MeshStandardMaterial({{'{'}} color: 0x00ff00, metalness: 0.5, roughness: 0.5 {{'}'}});
+          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+          scene.add(cube);
+
+          const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+          const sphereMaterial = new THREE.MeshStandardMaterial({{'{'}} color: 0xff0000, metalness: 0.5, roughness: 0.5 {{'}'}});
+          sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          sphere.position.set(2, 0, 0);
+          scene.add(sphere);
+
+          const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.4, 100, 16);
+          const torusKnotMaterial = new THREE.MeshStandardMaterial({{'{'}} color: 0xff69b4, metalness: 0.5, roughness: 0.5 {{'}'}});
+          torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial);
+          torusKnot.position.set(-2, 0, 0);
+          scene.add(torusKnot);
+          {{'}'}}
+
+        // Set up GUI controls
+        function setupGui() {{'{'}}
+          gui = new dat.GUI();
+
+          const ambientLightColor = {{'{'}} color: ambientLight.color.getHex() {{'}'}};
+          const directionalLightColor = {{'{'}} color: directionalLight.color.getHex() {{'}'}};
+          const cubeColor = {{'{'}} color: cube.material.color.getHex() {{'}'}};
+          const sphereColor = {{'{'}} color: sphere.material.color.getHex() {{'}'}};
+          const torusKnotColor = {{'{'}} color: torusKnot.material.color.getHex() {{'}'}};
+
+          const lightFolder = gui.addFolder('Lights');
+          lightFolder.addColor(ambientLightColor, 'color').onChange(() => {{'{'}}
+            ambientLight.color.set(ambientLightColor.color);
+            {{'}'}});
+          lightFolder.addColor(directionalLightColor, 'color').onChange(() => {{'{'}}
+            directionalLight.color.set(directionalLightColor.color);
+            {{'}'}});
+
+          const cubeFolder = gui.addFolder('Cube Material');
+          cubeFolder.addColor(cubeColor, 'color').onChange(() => {{'{'}}
+            cube.material.color.set(cubeColor.color);
+            {{'}'}});
+
+          const sphereFolder = gui.addFolder('Sphere Material');
+          sphereFolder.addColor(sphereColor, 'color').onChange(() => {{'{'}}
+            sphere.material.color.set(sphereColor.color);
+            {{'}'}});
+
+          const torusKnotFolder = gui.addFolder('TorusKnot Material');
+          torusKnotFolder.addColor(torusKnotColor, 'color').onChange(() => {{'{'}}
+            torusKnot.material.color.set(torusKnotColor.color);
+            {{'}'}});
+            {{'}'}}
+
+        // Set up orbit controls
+        function setupOrbitControls() {{'{'}}
+          controls = new OrbitControls(camera, renderer.domElement);
+          controls.enableDamping = true;
+          controls.dampingFactor = 0.25;
+          controls.screenSpacePanning = false;
+          controls.maxPolarAngle = Math.PI / 2;
+          {{'}'}}
+
+        // Animation loop
+        function animate() {{'{'}}
+          requestAnimationFrame(animate);
+
+          // Rotate the objects
+          cube.rotation.x += 0.01;
+          cube.rotation.y += 0.01;
+          sphere.rotation.x += 0.01;
+          sphere.rotation.y += 0.01;
+          torusKnot.rotation.x += 0.01;
+          torusKnot.rotation.y += 0.01;
+
+          // Update controls
+          controls.update();
+
+          // Render the scene
+          renderer.render(scene, camera);
+          {{'}'}}
+
+        // Handle window resize
+        function onWindowResize() {{'{'}}
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          {{'}'}}
+
+        // Initialize Three.js components and start the animation loop
+        initThree();
+        createScene();
+        createLights();
+        createObjects();
+        setupGui();
+        setupOrbitControls();
+        animate();
+      
+    
+
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+   
+
+   <br>
+
+
+        <div>
+
+
+           
+
+        </div>
+
+    </div>
+  
+<!-- explanation -->
+<div class="container">
+    <div class="container text-white">
+        <h1 class="my-4 text-center">Explanation</h1>
+
+        <h2>Importing Necessary Libraries:</h2>
+        <ul>
+            <li><code>import * as THREE from 'three';</code>: Imports the Three.js library, which is used for 3D
+                graphics.</li>
+            <li><code>import './style.css';</code>: Imports a CSS file for styling. The content of this file is not
+                provided in the code snippet.</li>
+            <li><code>import * as dat from 'dat.gui';</code>: Imports the dat.GUI library for creating a graphical user
+                interface to control parameters.</li>
+        </ul>
+
+        <h2>Setting Up the Scene:</h2>
+        <ul>
+            <li><code>const scene = new THREE.Scene();</code>: Creates a Three.js scene to hold 3D objects.</li>
+            <li><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);</code>:
+                Creates a perspective camera with specified parameters.</li>
+            <li><code>const renderer = new THREE.WebGLRenderer();</code>: Creates a WebGL renderer for rendering the 3D
+                scene.</li>
+            <li><code>renderer.setSize(window.innerWidth, window.innerHeight);</code>: Sets the renderer size to match
+                the window size.</li>
+            <li><code>document.body.appendChild(renderer.domElement);</code>: Appends the renderer's canvas element to
+                the document body.</li>
+        </ul>
+
+        <h2>Creating Ambient and Directional Lights:</h2>
+        <ul>
+            <li><code>const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);</code>: Creates ambient light with a
+                white color and intensity of 0.5.</li>
+            <li><code>const directionalLight = new THREE.DirectionalLight(0xffffff, 1);</code>: Creates a directional
+                light with white color and intensity of 1.</li>
+            <li><code>scene.add(ambientLight);</code> and <code>scene.add(directionalLight);</code>: Adds lights to the
+                scene.</li>
+        </ul>
+
+        <h2>Creating 3D Objects:</h2>
+        <ul>
+            <li><code>const cubeGeometry = new THREE.BoxGeometry();</code>: Creates a cube geometry.</li>
+            <li><code>const cubeMaterial = new THREE.MeshStandardMaterial({{'{'}} color: 0x00ff00, metalness: 0.5, roughness: 0.5 {{'}'}});</code>:
+                Creates a standard material for the cube with green color, metalness, and roughness properties.</li>
+            <li><code>const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);</code>: Creates a mesh (cube) with the
+                specified geometry and material.</li>
+            <li><code>scene.add(cube);</code>: Adds the cube to the scene.</li>
+        </ul>
+
+        <!-- Similar blocks for creating Sphere and TorusKnot -->
+
+        <h2>GUI Controls for Lights and Material:</h2>
+        <ul>
+            <li><code>const gui = new dat.GUI();</code>: Creates a dat.GUI instance for adding graphical controls.</li>
+            <li><code>lightFolder.addColor(ambientLightColor, 'color').onChange(function () {{'{'}} ambientLight.color.set(ambientLightColor.color); {{'}'}});</code>:
+                Adds a color control for ambient light.</li>
+            <li><code>cubeFolder.addColor(cubeColor, 'color').onChange(function () {{'{'}} cube.material.color.set(cubeColor.color); {{'}'}});</code>:
+                Adds a color control for the cube's material.</li>
+        </ul>
+
+        <h2>Animation Loop and Window Resize Handling:</h2>
+        <ul>
+            <li><code>const animate = () => {{'{'}} ... {{'}'}};</code>: Defines an animation loop using the
+                requestAnimationFrame function.</li>
+            <li><code>window.addEventListener('resize', () => {{'{'}}... {{'}'}});</code>: Event listener for window
+                resize updates the camera aspect ratio and renderer size.</li>
+        </ul>
+
+        <h2>Starting the Animation:</h2>
+        <ul>
+            <li><code>animate();</code>: Initiates the animation loop.</li>
+        </ul>
+    </div>
+</div>

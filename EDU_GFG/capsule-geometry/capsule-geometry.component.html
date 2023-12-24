@@ -1,0 +1,254 @@
+
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>CapsuleGeometry</b></h1>
+        <p class="text-white">
+            CapsuleGeometry is a class that represents a capsule shape, which is essentially a cylinder with rounded ends. It's a convenient way to create these common shapes in your 3D scenes without having to manually define their vertices and faces.        </p>
+
+
+        <div class="container">
+            <h3><b class="text-white">CapsuleGeometry</b>(radius : Float, length : Float, capSegments : Integer, radialSegments : Integer)</h3>
+
+            <details>
+                <summary>radius (Float)</summary>
+<p>The radius parameter typically represents the radius of the cylindrical portion of the capsule. In a capsule, this cylindrical part is essentially like a tube connecting the two hemispherical caps.</p>                <ul>
+                    <li><strong>radius :</strong>Radius of the capsule. Optional; defaults to 1</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>Length (Float)</summary>
+<p>The length parameter refers to the length of the cylindrical portion of the capsule. It's the distance between the centers of the two hemispherical caps.</p>                <ul>
+                    <li><strong>length : Float :</strong>Length of the middle section. Optional; defaults to 1</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>capSegments (Integer)</summary>
+<p>capSegments likely refers to the number of segments used to approximate the curved surfaces of the hemispherical caps. The more segments you have, the smoother the appearance of the caps.</p>                <ul>
+                    <li><strong>radialSegments :</strong>Number of curve segments used to build the caps. Optional; defaults to 4.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>radialSegments (Integer)</summary>
+<p>radialSegments typically represents the number of segments around the circumference of the cylinder (or the caps). Increasing this value results in a higher resolution geometry with more faces, leading to a smoother appearance.</p>                <ul>
+                    <li><strong>heightSegments :</strong> Number of segmented faces around the circumference of the capsule. Optional; defaults to 8.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>openEnded (Boolean)</summary>
+                <p> A boolean that determines whether the ends of the cone are open or closed. If set to true, the cone will have open ends, and if set to false, the ends will be closed. Open-ended cones look like a party hat with no bottom.</p>
+                <ul>
+                    <li><strong>openEnded :</strong>A Boolean indicating whether the base of the cone is open or capped. Default is false, meaning capped.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>thetaStart (Float)</summary>
+                <p>The starting angle in radians of the circular sector used to create the cone. It determines from which angle the geometry is created around the cone's circumference. The default is 0.</p>
+                <ul>
+                    <li><strong>openEnded:</strong> Start angle for first segment, default = 0 (three o'clock position).</li>
+                </ul>
+            </details>
+
+          
+            <details>
+                <summary>thetaLength (Float)</summary>
+                <p>The central angle in radians of the circular sector. This defines how much of the circle is used to create the cone. The default is Math.PI * 2, which creates a complete circle.</p>
+                <ul>
+                    <li><strong>thetaLength :</strong>The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete cone.</li>
+                </ul>
+            </details>
+
+        <p>When working with Three.js or any 3D graphics library, adjusting these parameters allows you to control the level of detail and visual quality of your 3D objects. Keep in mind that the exact names and functionality of these parameters may vary depending on the specific implementation or library version. If "CapsuleGeometry" is part of a specific extension or third-party library, it's important to refer to the documentation for accurate details.</p>
+        </div>
+
+
+     
+
+ 
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js SphereGeometry Example</h1>
+                <pre>
+    <code>
+        
+        import * as THREE from 'three';
+        import './style.css'; // Make sure you have this CSS file for styling
+        import * as dat from 'dat.gui';
+        import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js';
+        
+        // Create a scene
+        const scene = new THREE.Scene();
+        
+        // Create a camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        
+        // Create a renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        // Initial parameters for the CapsuleGeometry
+        const initialCapsuleParams = {{'{'}}
+          radius: 1,
+          length: 2,
+          capSegments: 4,
+          radialSegments: 8,
+    {{'}'}};
+        
+        // Create a capsule
+        const capsuleGeometry = new THREE.CapsuleGeometry(
+          initialCapsuleParams.radius,
+          initialCapsuleParams.length,
+          initialCapsuleParams.capSegments,
+          initialCapsuleParams.radialSegments
+        );
+        const material = new THREE.MeshBasicMaterial({{'{'}} color: 'blue' {{'}'}});
+        const capsule = new THREE.Mesh(capsuleGeometry, material);
+        scene.add(capsule);
+        
+        // dat.GUI controls
+        const gui = new dat.GUI();
+        const capsuleFolder = gui.addFolder('Capsule Settings');
+        capsuleFolder.add(initialCapsuleParams, 'radius', 0.1, 5).onChange(updateCapsuleGeometry);
+        capsuleFolder.add(initialCapsuleParams, 'length', 0.1, 10).onChange(updateCapsuleGeometry);
+        capsuleFolder.add(initialCapsuleParams, 'capSegments', 3, 20).step(1).onChange(updateCapsuleGeometry);
+        capsuleFolder.add(initialCapsuleParams, 'radialSegments', 3, 20).step(1).onChange(updateCapsuleGeometry);
+        //wireframe
+        capsuleFolder.add(material, 'wireframe');
+        capsuleFolder.open();
+        
+        function updateCapsuleGeometry() {{'{'}}
+          // Update the capsule geometry based on the dat.GUI controls
+          capsule.geometry.dispose();
+          capsule.geometry = new THREE.CapsuleGeometry(
+            initialCapsuleParams.radius,
+            initialCapsuleParams.length,
+            initialCapsuleParams.capSegments,
+            initialCapsuleParams.radialSegments
+          );
+        {{'}'}}
+        
+        // Animation loop
+        const animate = () => {{'{'}}
+          requestAnimationFrame(animate);
+        
+          // Rotate the capsule
+          capsule.rotation.x += 0.01;
+          capsule.rotation.y += 0.01;
+        
+          // Render the scene
+          renderer.render(scene, camera);
+        {{'}'}};
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {{'{'}}
+          const newWidth = window.innerWidth;
+          const newHeight = window.innerHeight;
+        
+          camera.aspect = newWidth / newHeight;
+          camera.updateProjectionMatrix();
+        
+          renderer.setSize(newWidth, newHeight);
+        {{'}'}});
+        
+        // Start the animation loop
+        animate();
+        
+
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+   
+
+   <br>
+
+
+        <div>
+
+
+           
+
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+        <div class="container text-white">
+            <h1 class="my-4 text-center">Explanation</h1>
+    
+            <h2>Importing Necessary Libraries:</h2>
+            <ul>
+                <li><code>import * as THREE from 'three';</code>: Imports the Three.js library, which is used for 3D graphics.</li>
+                <li><code>import './style.css';</code>: Imports a CSS file for styling. The content of this file is not provided in the code snippet.</li>
+                <li><code>import * as dat from 'dat.gui';</code>: Imports the dat.GUI library for creating a graphical user interface to control parameters.</li>
+            </ul>
+    
+            <h2>Setting Up the Scene:</h2>
+            <ul>
+                <li><code>const scene = new THREE.Scene();</code>: Creates a Three.js scene to hold 3D objects.</li>
+                <li><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);</code>: Creates a perspective camera with specified parameters.</li>
+                <li><code>const renderer = new THREE.WebGLRenderer();</code>: Creates a WebGL renderer for rendering the 3D scene.</li>
+                <li><code>renderer.setSize(window.innerWidth, window.innerHeight);</code>: Sets the renderer size to match the window size.</li>
+                <li><code>document.body.appendChild(renderer.domElement);</code>: Appends the renderer's canvas element to the document body.</li>
+            </ul>
+    
+            <h2>Creating Ambient and Directional Lights:</h2>
+            <ul>
+                <li><code>const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);</code>: Creates ambient light with a white color and intensity of 0.5.</li>
+                <li><code>const directionalLight = new THREE.DirectionalLight(0xffffff, 1);</code>: Creates a directional light with white color and intensity of 1.</li>
+                <li><code>scene.add(ambientLight);</code> and <code>scene.add(directionalLight);</code>: Adds lights to the scene.</li>
+            </ul>
+    
+            <h2>Creating a Cube with Material:</h2>
+            <ul>
+                <li><code>const geometry = new THREE.BoxGeometry();</code>: Creates a cube geometry.</li>
+                <li><code>const material = new THREE.MeshStandardMaterial({{'{'}} color: 0x00ff00, metalness: 0.5, roughness: 0.5 {{'}'}});</code>: Creates a standard material for the cube with green color, metalness, and roughness properties.</li>
+                <li><code>const cube = new THREE.Mesh(geometry, material);</code>: Creates a mesh (cube) with the specified geometry and material.</li>
+                <li><code>scene.add(cube);</code>: Adds the cube to the scene.</li>
+            </ul>
+    
+            <h2>GUI Controls for Lights and Material:</h2>
+            <ul>
+                <li><code>const gui = new dat.GUI();</code>: Creates a dat.GUI instance for adding graphical controls.</li>
+                <li><code>lightFolder.addColor(ambientLightColor, 'color').onChange(function () {{'{'}} ambientLight.color.set(ambientLightColor.color); {{'}'}});</code>: Adds a color control for ambient light.</li>
+                <li><code>cubeFolder.addColor(cubeColor, 'color').onChange(function () {{'{'}} material.color.set(cubeColor.color); {{'}'}});</code>: Adds a color control for the cube's material.</li>
+            </ul>
+    
+            <h2>Animation Loop and Window Resize Handling:</h2>
+            <ul>
+                <li><code>const animate = () => {{'{'}} ... {{'}'}};</code>: Defines an animation loop using the requestAnimationFrame function.</li>
+                <li><code>window.addEventListener('resize', () => {{'{'}} ... {{'}'}});</code>: Event listener for window resize updates the camera aspect ratio and renderer size.</li>
+            </ul>
+    
+            <h2>Starting the Animation:</h2>
+            <ul>
+                <li><code>animate();</code>: Initiates the animation loop.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <br>
+    
+    <div id="renderer-container"></div>
+
+    

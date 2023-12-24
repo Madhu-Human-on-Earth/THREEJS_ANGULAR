@@ -1,0 +1,196 @@
+
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>AmbientLight</b></h1>
+        <p class="text-white">
+
+             AmbientLight is a type of light in the Three.js library that represents ambient (or global) light in a scene. Ambient light is a type of non-directional light that illuminates all objects in the scene equally, regardless of their position and orientation. It simulates the overall brightness or color tone of a scene and helps to eliminate completely dark areas
+
+
+
+
+     
+
+ 
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js AmbientLight Example</h1>
+                <pre>
+    <code>
+        
+        import * as THREE from 'three';
+        import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js';
+        import * as dat from 'dat.gui';
+        import './style.css';
+        
+        // Create a scene
+        const scene = new THREE.Scene();
+        
+        // Create a camera
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        camera.position.z = 5;
+        
+        // Create a WebGLRenderer
+        const renderer = new THREE.WebGLRenderer({{'{'}} antialias: true {{'}'}});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        // Create AmbientLight
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        // Create Directional Light
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
+        
+        // Create a Cube with MeshStandardMaterial
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshStandardMaterial({{'{'}}
+          color: 0x00ff00,
+          metalness: 0.5,
+          roughness: 0.5
+          {{'}'}});
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        
+        // GUI setup
+        const gui = new dat.GUI();
+        
+        // AmbientLight color controller
+        const ambientLightColor = {{'{'}} color: ambientLight.color.getHex() {{'}'}};
+        const lightFolder = gui.addFolder('Ambient Light');
+        lightFolder.addColor(ambientLightColor, 'color').onChange(function () {{'{'}}
+          ambientLight.color.set(ambientLightColor.color);
+          {{'}'}});
+        
+        // Cube material color controller
+        const cubeColor = {{'{'}} color: material.color.getHex() {{'}'}};
+        const cubeFolder = gui.addFolder('Cube Material');
+        cubeFolder.addColor(cubeColor, 'color').onChange(function () {{'{'}}
+          material.color.set(cubeColor.color);
+          {{'}'}});
+        
+        // Animate the scene
+        const animate = () => {{'{'}}
+          requestAnimationFrame(animate);
+        
+          // Rotate the cube
+          cube.rotation.x += 0.01;
+          cube.rotation.y += 0.01;
+        
+          // Render the scene
+          renderer.render(scene, camera);
+          {{'}'}};
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {{'{'}}
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+    {{'}'}};
+        // Start animation
+        animate();
+        
+        
+
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+   
+
+   <br>
+
+
+        <div>
+
+
+           
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+        <div class="container text-white">
+            <h1 class="my-4 text-center">Explanation</h1>
+    
+            <h2>Importing Necessary Libraries:</h2>
+            <ul>
+                <li><code>import * as THREE from 'three';</code>: Imports the Three.js library, which is used for 3D graphics.</li>
+                <li><code>import './style.css';</code>: Imports a CSS file for styling. The content of this file is not provided in the code snippet.</li>
+                <li><code>import * as dat from 'dat.gui';</code>: Imports the dat.GUI library for creating a graphical user interface to control parameters.</li>
+            </ul>
+    
+            <h2>Setting Up the Scene:</h2>
+            <ul>
+                <li><code>const scene = new THREE.Scene();</code>: Creates a Three.js scene to hold 3D objects.</li>
+                <li><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);</code>: Creates a perspective camera with specified parameters.</li>
+                <li><code>const renderer = new THREE.WebGLRenderer();</code>: Creates a WebGL renderer for rendering the 3D scene.</li>
+                <li><code>renderer.setSize(window.innerWidth, window.innerHeight);</code>: Sets the renderer size to match the window size.</li>
+                <li><code>document.body.appendChild(renderer.domElement);</code>: Appends the renderer's canvas element to the document body.</li>
+            </ul>
+    
+            <h2>Creating Ambient and Directional Lights:</h2>
+            <ul>
+                <li><code>const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);</code>: Creates ambient light with a white color and intensity of 0.5.</li>
+                <li><code>const directionalLight = new THREE.DirectionalLight(0xffffff, 1);</code>: Creates a directional light with white color and intensity of 1.</li>
+                <li><code>scene.add(ambientLight);</code> and <code>scene.add(directionalLight);</code>: Adds lights to the scene.</li>
+            </ul>
+    
+            <h2>Creating a Cube with Material:</h2>
+            <ul>
+                <li><code>const geometry = new THREE.BoxGeometry();</code>: Creates a cube geometry.</li>
+                <li><code>const material = new THREE.MeshStandardMaterial({{'{'}} color: 0x00ff00, metalness: 0.5, roughness: 0.5 {{'}'}});</code>: Creates a standard material for the cube with green color, metalness, and roughness properties.</li>
+                <li><code>const cube = new THREE.Mesh(geometry, material);</code>: Creates a mesh (cube) with the specified geometry and material.</li>
+                <li><code>scene.add(cube);</code>: Adds the cube to the scene.</li>
+            </ul>
+    
+            <h2>GUI Controls for Lights and Material:</h2>
+            <ul>
+                <li><code>const gui = new dat.GUI();</code>: Creates a dat.GUI instance for adding graphical controls.</li>
+                <li><code>lightFolder.addColor(ambientLightColor, 'color').onChange(function () {{'{'}} ambientLight.color.set(ambientLightColor.color); {{'}'}});</code>: Adds a color control for ambient light.</li>
+                <li><code>cubeFolder.addColor(cubeColor, 'color').onChange(function () {{'{'}} material.color.set(cubeColor.color); {{'}'}});</code>: Adds a color control for the cube's material.</li>
+            </ul>
+    
+            <h2>Animation Loop and Window Resize Handling:</h2>
+            <ul>
+                <li><code>const animate = () => {{'{'}} ... {{'}'}};</code>: Defines an animation loop using the requestAnimationFrame function.</li>
+                <li><code>window.addEventListener('resize', () => {{'{'}} ... {{'}'}});</code>: Event listener for window resize updates the camera aspect ratio and renderer size.</li>
+            </ul>
+    
+            <h2>Starting the Animation:</h2>
+            <ul>
+                <li><code>animate();</code>: Initiates the animation loop.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <br>
+    
+
+    
+
+
+   <br>
+
+   

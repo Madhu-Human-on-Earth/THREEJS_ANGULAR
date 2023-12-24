@@ -1,0 +1,28 @@
+
+  /* Optional: Adjust the styling as needed for responsiveness */
+  /* @media (max-width: 768px) {
+    .container {
+      margin-top: 20px;
+    }
+  } */
+  
+  .middle-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: white;
+    font-size: 24px;
+    padding: 30px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  
+    /* Add these media queries to adjust the styles for different screen sizes */
+    @media (max-width: 768px) {
+      width: calc(100% - 2*30px); /* Adjust width to fit screen size */
+      font-size: 1em; /* Adjust font size for smaller screens */
+    }
+  }

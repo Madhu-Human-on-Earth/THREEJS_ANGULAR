@@ -1,0 +1,26 @@
+/* .sticky-menu-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+} */
+
+.sidenav-container {
+  height: 100vh;
+  overflow: hidden;
+  
+  
+}
+
+.sticky-sidenav {
+  height: 100%; 
+  
+  overflow-y: auto; 
+}
+
+.content-container {
+  height: 100vh; 
+  overflow-y: auto;
+}
+
+
+

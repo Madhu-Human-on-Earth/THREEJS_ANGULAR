@@ -1,0 +1,103 @@
+<!-- <div class="sticky-menu-container">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div> -->
+
+<!-- sidevan start -->
+<!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">Toggle right offcanvas</button>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasLeftLabel">Offcanvas right</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    ...
+  </div>
+</div> -->
+<!-- sidevan start -->
+
+<!-- MatSidenavContainer should wrap your entire content -->
+<mat-sidenav-container class="sidenav-container bg-dark">
+  <!-- Navigation Sidenav -->
+  <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen" class="sticky-sidenav">
+   
+    <mat-nav-list class="bg-dark text-white bg">
+
+<!-- 
+      <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-input">
+        <button mat-icon-button class="search-button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div> -->
+      <!-- Navigation links go here -->
+      <a routerLink="Home" routerLinkActive="active" class="nav-link" mat-list-item><b class="text-white">HOME</b></a>
+      <a routerLink="signin" routerLinkActive="active" class="nav-link" mat-list-item><b class="text-white">CONTACT US</b></a>
+      <a routerLink="installation" routerLinkActive="active" class="nav-link" mat-list-item><b class="text-white">INSTALLATION</b></a>
+      <!-- BOX link with sub-links -->
+      <mat-nav-list class="text-white">
+        <b class="ms-3">PRIMITIVES</b>
+        <mat-nav-list class="text-white">
+          <a routerLink="box" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">BOX</i></b></a>
+          <a routerLink="sphere" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">SPHERE</i></b></a>
+          <a routerLink="cylinder" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">CYLINDER</i></b></a>
+          <a routerLink="cone" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">CONE</i></b></a>
+          <a routerLink="torus" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">TORUS</i></b></a>
+          <a routerLink="torusK" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">TORUS-KNOT</i></b></a>
+          <a routerLink="capsule" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">CAPSULE</i></b></a>
+
+        </mat-nav-list>
+      </mat-nav-list>
+
+
+    <!-- Light -->
+    <mat-nav-list class="text-white">
+      <b class="ms-3">LIGHTS</b>
+      <mat-nav-list class="text-white">
+        <a routerLink="ambient" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">AMBIENT LIGHT</i></b></a>
+        <a routerLink="directional" routerLinkActive="active" class="nav-link ms-3" mat-list-item><b><i class="text-white">DIRECTIONAL LIGHT</i></b></a>
+        
+      </mat-nav-list>
+    </mat-nav-list>
+
+
+
+      <!-- Add more navigation links as needed -->
+    </mat-nav-list>
+    
+  </mat-sidenav>
+
+  <!-- Content Sidenav -->
+  <mat-sidenav-content class="content-container">
+    <!-- Toggle button with mat-icon -->
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon class="text-bg-primary">{{ isSidenavOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <router-outlet></router-outlet> -->
+<!-- <mat-sidenav-container #sidenavContainer>
+  <mat-sidenav #sidenav mode="side" opened="true" class="sticky-sidenav">
+    <mat-nav-list>
+      <a routerLink="box" routerLinkActive="active" class="nav-link" mat-list-item>BOX</a>
+      <a routerLink="sphere" routerLinkActive="active" class="nav-link" mat-list-item>SPHERE</a>
+      <a mat-list-item>SERVICES</a>
+      <a mat-list-item>CONTACT</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+    
+  </mat-sidenav-content>
+</mat-sidenav-container> -->

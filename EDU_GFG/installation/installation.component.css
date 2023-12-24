@@ -1,0 +1,30 @@
+ 
+ 
+ .container{
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(43, 46, 43, 0.966);
+
+ }
+.language-bash {
+
+    background-color: #000000;
+    padding: 12px;
+}
+
+     .card {
+        background-color: #ffffff;
+        border: none;
+        margin-bottom: 20px;
+    }
+
+    .card:hover{
+        background-color:goldenrod;
+       border: none;
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    } 

@@ -1,0 +1,230 @@
+<div class="container bg-dark text-white p-3 mt-2">
+    <div class="ms-2">
+        <h1 class="text-center  text-bg-light"><b>TorusKnotGeometry</b></h1>
+        <p class="text-white">
+            TorusKnotGeometry in Three.js represents a geometric shape known as a torus knot. A torus knot is formed by looping a closed curve in three-dimensional space, creating a knotted shape that wraps around itself. The TorusKnotGeometry allows you to generate and work with this type of geometry.        </p>
+
+
+        <div class="container">
+            <h3><b class="text-white">TorusKnotGeometry</b>(radius : Float, tube : Float, tubularSegments : Integer, radialSegments : Integer, p : Integer, q : Integer);</h3>
+
+            <details>
+                <summary>radius (float)</summary>
+<p>This parameter specifies the overall radius of the torus knot. It determines how far the knot extends from its center to the outermost part.</p>              
+  <ul>
+                    <li><strong>radius:</strong>Radius of the torus. Default is 1.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>tubeRadius  (Float)</summary>
+<p>The tube radius determines the thickness of the torus knot. It controls the size of the "tube" that forms the knot.</p>              
+  <ul>
+                    <li><strong>tube :</strong>Radius of the tube. Default is 0.4.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>tubularSegments   (integer)</summary>
+<p>This parameter defines the number of segments that make up the tube's circumference. Increasing this value results in a smoother appearance.</p>         
+       <ul>
+                    <li><strong>tubularSegments :</strong>Default is 64 </li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>radialSegments   (Integer)</summary>
+<p>: The radial segments determine the number of segments around the torus. Higher values create a torus with more circular cross-sections.</p> <ul>
+                    <li><strong>radialSegments :</strong> Default is 8.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>p </summary>
+<p> An integer parameter that influences the shape of the knot. Changing the value of p alters the number of times the knot winds around itself.</p>                <ul>
+                    <li><strong>p  :</strong> This value determines, how many times the geometry winds around its axis of rotational symmetry. Default is 2.</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>q </summary>
+<p> Another integer parameter that affects the knot's shape. Changing the value of q alters the number of times the knot winds in a perpendicular direction to p.</p>                <ul>
+                    <li><strong>q  :</strong>This value determines, how many times the geometry winds around a circle in the interior of the torus. Default is 3.</li>
+                </ul>
+            </details>
+
+           
+            <p>TorusGeometry in Three.js provides a versatile way to create torus-shaped 3D geometries for use in your web-based 3D graphics applications. It offers various parameters to customize the torus's appearance and can be combined with different materials for enhanced visual effects.
+
+
+
+
+            </p>
+
+        </div>
+
+
+        <div>
+
+
+            <!-- full code for sphere geometry in three.js   -->
+            <div class="code-container">
+                <h1>Three.js SphereGeometry Example</h1>
+                <pre>
+    <code>
+  
+        import * as THREE from 'three';
+        import './style.css'
+        import * as dat from 'dat.gui';
+        import {{'{'}} OrbitControls {{'}'}} from 'three/examples/jsm/controls/OrbitControls.js'
+        
+        // Create a scene
+        const scene = new THREE.Scene();
+        
+        // Create a perspective camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        
+        // Create a WebGL renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        // Create TorusKnotGeometry
+        const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.4, 100, 16, 3, 4);
+        
+        // Create a material
+        const material = new THREE.MeshBasicMaterial({{'{'}} color: 0x00ff00, wireframe: true  {{'}'}});
+        
+        // Create a mesh by combining the geometry and material
+        const torusKnotMesh = new THREE.Mesh(torusKnotGeometry, material);
+        
+        // Add the torus knot mesh to the scene
+        scene.add(torusKnotMesh);
+        
+        // Setup OrbitControls to enable camera movement
+        const controls = new OrbitControls(camera, renderer.domElement);
+        
+        // Create GUI
+        const gui = new dat.GUI();
+        
+        // GUI Controls
+        const torusFolder = gui.addFolder('TorusKnot Settings');
+        const torusParams = {{'{'}}
+            radius: torusKnotGeometry.parameters.radius,
+            tube: torusKnotGeometry.parameters.tube,
+            radialSegments: torusKnotGeometry.parameters.radialSegments,
+            tubularSegments: torusKnotGeometry.parameters.tubularSegments,
+            p: torusKnotGeometry.parameters.p,
+            q: torusKnotGeometry.parameters.q,
+            {{'}'}};
+        
+        function updateTorusKnotGeometry() {{'{'}}
+            scene.remove(torusKnotMesh);
+            torusKnotGeometry.dispose();
+        
+            torusKnotGeometry.parameters = {{'{'}}
+                radius: torusParams.radius,
+                tube: torusParams.tube,
+                radialSegments: torusParams.radialSegments,
+                tubularSegments: torusParams.tubularSegments,
+                p: torusParams.p,
+                q: torusParams.q,
+                {{'}'}};
+        
+            const newTorusKnotGeometry = new THREE.TorusKnotGeometry(
+                torusParams.radius,
+                torusParams.tube,
+                torusParams.radialSegments,
+                torusParams.tubularSegments,
+                torusParams.p,
+                torusParams.q
+            );
+        
+            torusKnotMesh.geometry = newTorusKnotGeometry;
+            scene.add(torusKnotMesh);
+            {{'}'}}
+        
+        torusFolder.add(torusParams, 'radius', 1, 10).onChange(updateTorusKnotGeometry);
+        torusFolder.add(torusParams, 'tube', 0.1, 5).onChange(updateTorusKnotGeometry);
+        torusFolder.add(torusParams, 'radialSegments', 3, 32, 1).onChange(updateTorusKnotGeometry);
+        torusFolder.add(torusParams, 'tubularSegments', 3, 100, 1).onChange(updateTorusKnotGeometry);
+        torusFolder.add(torusParams, 'p', 1, 10).onChange(updateTorusKnotGeometry);
+        torusFolder.add(torusParams, 'q', 1, 10).onChange(updateTorusKnotGeometry);
+        
+        // Animation function
+        const animate = () => {{'{'}}
+            requestAnimationFrame(animate);
+        
+            // Rotate the torus knot
+            torusKnotMesh.rotation.x += 0.01;
+            torusKnotMesh.rotation.y += 0.01;
+        
+            // Update controls
+            controls.update();
+        
+            // Render the scene
+            renderer.render(scene, camera);
+            {{'}'}};
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {{'{'}}
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+        
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+        
+            renderer.setSize(newWidth, newHeight);
+            {{'}'}});
+        
+        // Start the animation
+        animate();
+        
+        
+    </code>
+  </pre>
+                <br>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+<!-- code explanation -->
+<div class="container">
+    <div class="container">
+        <h1 class="my-4 text-center">Explanation</h1>
+
+        <h2>Importing Libraries and Setting Up the Scene</h2>
+        <p>The first part of the code imports the necessary libraries: Three.js, OrbitControls, and dat.gui. These libraries are used to create the 3D scene, handle camera controls, and provide a graphical user interface (GUI) for adjusting the torus knot's parameters.</p>
+
+        <h2>Creating the Torus Knot and Adding It to the Scene</h2>
+        <p>The code then defines the parameters of the torus knot to be created: radius, tube radius, radial segments, tubular segments, p, and q. These parameters determine the size and complexity of the torus knot geometry.</p>
+
+        <h2>Animation Loop and Torus Knot Rotation</h2>
+        <p>The animate function is responsible for the animation loop. This function is called repeatedly using requestAnimationFrame, which ensures smooth animation at a consistent frame rate. Inside the loop, the torus knot mesh is continuously rotated around its x and y axes.</p>
+
+        <h2>Camera Positioning and GUI Setup</h2>
+        <p>The camera position is set by setting its position.z property to 5. This places the camera at a fixed distance from the center of the torus knot, providing a good viewing angle. The code also sets up the dat.GUI controls for adjusting the torus knot's parameters interactively.</p>
+
+        <h2>Handling Window Resize</h2>
+        <p>The code adds an event listener for the resize event of the window. This ensures that the camera's aspect ratio is adjusted correctly when the window size changes, preventing distortions in the animation. The entire scene is then re-rendered with the updated dimensions.</p>
+
+        <h2>Starting the Animation</h2>
+        <p>Finally, the animate function is called at the end of the code, initiating the animation loop. This continuously updates the torus knot's rotation and renders the updated scene, resulting in a smooth 3D animation of a rotating torus knot.</p>
+    </div>
+</div>
+
+
+
+</div>
+<div class="video-container">
+    <video controls>
+        <source src="../assets/images/platforms/TorusK.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
